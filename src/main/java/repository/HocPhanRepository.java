@@ -37,4 +37,24 @@ public class HocPhanRepository extends BaseRepository {
         em.close();
         return hp;
     }
+
+    public void update(HocPhan hp) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.merge(hp);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void deleteById(Long id) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        HocPhan hp = em.find(HocPhan.class, id);
+        if (hp != null) {
+            em.remove(hp); // CascadeType.ALL xóa cả DangKyHoc liên quan
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+
 }

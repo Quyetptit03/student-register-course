@@ -37,4 +37,24 @@ public class SinhVienRepository extends BaseRepository {
         em.close();
         return sv;
     }
+
+    public void update(SinhVien sv) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.merge(sv);
+        em.getTransaction().commit();
+        em.close();
+    }
+
+    public void deleteById(Long id) {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        SinhVien sv = em.find(SinhVien.class, id);
+        if (sv != null) {
+            em.remove(sv);
+        }
+        em.getTransaction().commit();
+        em.close();
+    }
+
 }

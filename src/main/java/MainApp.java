@@ -12,12 +12,6 @@ public class MainApp {
     private static DangKyHocService dkService = new DangKyHocService();
 
     public static void main(String[] args) {
-        if (svService.layTatCa().isEmpty()) {
-            svService.themSinhVien("SV01", "Nguyễn Văn A");
-            svService.themSinhVien("SV02", "Trần Thị B");
-            svService.themSinhVien("SV03", "Lê Văn C");
-        }
-
         if (hpService.layTatCa().isEmpty()) {
             hpService.themHocPhan("HP01", "Lập trình Java", 3);
             hpService.themHocPhan("HP02", "Cơ sở dữ liệu", 3);
@@ -34,6 +28,10 @@ public class MainApp {
             System.out.println("5. Xóa đăng ký học phần");
             System.out.println("6. ➕ Thêm sinh viên mới");
             System.out.println("7. ➕ Thêm học phần mới");
+            System.out.println("8. ✏️ Cập nhật sinh viên");
+            System.out.println("9. ✏️ Cập nhật học phần");
+            System.out.println("10. ❌ Xóa sinh viên");
+            System.out.println("11. ❌ Xóa học phần");
             System.out.println("0. Thoát");
             System.out.print("Chọn: ");
             int c = sc.nextInt();
@@ -101,12 +99,17 @@ public class MainApp {
                         System.out.println("✅ Đã xóa đăng ký!");
                     } else System.out.println("❌ Không tìm thấy!");
                 }
-                case 6 -> { // thêm sinh viên
+                case 6 -> { // Thêm sinh viên mới
                     System.out.print("Nhập mã sinh viên: ");
                     String maSv = sc.nextLine();
                     System.out.print("Nhập họ tên sinh viên: ");
                     String hoTen = sc.nextLine();
-                    System.out.println(svService.themSinhVien(maSv, hoTen));
+                    System.out.print("Nhập email sinh viên: ");
+                    String email = sc.nextLine();
+                    System.out.print("Nhập địa chỉ sinh viên: ");
+                    String diaChi = sc.nextLine();
+
+                    System.out.println(svService.themSinhVien(maSv, hoTen, email, diaChi));
                 }
 
                 case 7 -> { // thêm học phần
@@ -118,6 +121,43 @@ public class MainApp {
                     int soTinChi = sc.nextInt();
                     sc.nextLine(); // clear buffer
                     System.out.println(hpService.themHocPhan(maHp, tenHp, soTinChi));
+                }
+
+                case 8 -> { // Cập nhật sinh viên
+                    System.out.print("Nhập ID sinh viên cần cập nhật: ");
+                    Long id = sc.nextLong();
+                    sc.nextLine();
+                    System.out.print("Nhập họ tên mới: ");
+                    String hoTen = sc.nextLine();
+                    System.out.print("Nhập email mới: ");
+                    String email = sc.nextLine();
+                    System.out.print("Nhập địa chỉ mới: ");
+                    String diaChi = sc.nextLine();
+
+                    System.out.println(svService.capNhatSinhVien(id, hoTen, email, diaChi));
+                }
+
+                case 9 -> {
+                    System.out.print("Nhập ID học phần cần cập nhật: ");
+                    Long id = sc.nextLong();
+                    sc.nextLine();
+                    System.out.print("Nhập tên học phần mới: ");
+                    String ten = sc.nextLine();
+                    System.out.print("Nhập số tín chỉ mới: ");
+                    int soTinChi = sc.nextInt();
+                    System.out.println(hpService.capNhatHocPhan(id, ten, soTinChi));
+                }
+
+                case 10 -> {
+                    System.out.print("Nhập ID sinh viên cần xóa: ");
+                    Long id = sc.nextLong();
+                    System.out.println(svService.xoaSinhVien(id));
+                }
+
+                case 11 -> {
+                    System.out.print("Nhập ID học phần cần xóa: ");
+                    Long id = sc.nextLong();
+                    System.out.println(hpService.xoaHocPhan(id));
                 }
                 case 0 -> {
                     System.out.println("Thoát chương trình!");
